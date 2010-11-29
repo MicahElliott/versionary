@@ -2,8 +2,9 @@
 
 # sysinfo — Console util to show concise system info for Linux arch/distro.
 #
-# Author: Micah Elliott <mde MicahElliott com>
-# Date:   2005
+# Author:  Micah Elliott http://MicahElliott.com
+# License: WTFPL http://sam.zoy.org/wtfpl/
+# Date:    2005
 #
 # This is really just a recipe for quickly showing the most pertinent
 # info for your systems. It was originally deployed in a compiler test
