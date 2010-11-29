@@ -1,0 +1,71 @@
+#! /bin/bash
+
+# sysinfo — Console util to show concise system info for any arch/distro.
+#
+# Author: Micah Elliott <mde MicahElliott com>
+# Date:   2005
+#
+# This is really just a recipe for quickly showing the most pertinent
+# info for your systems. It was originally deployed in a compiler test
+# lab to be used on 50+ diverse machines.
+#
+# The info shown is particularly useful for working with compilers
+# (gcc, glibc, etc), but you may want to tune it for whatever common
+# tools you work with (ruby/python/perl versions, etc). It’s also
+# handy for generating consistent bug reports.
+#
+# I wrote this back in 2005 to support RedHat and SuSE distros.  Now
+# (2010) I’ve added some Ubuntu support, but I no longer use the
+# others so not certain what’s borked there now.
+#
+# For Ubuntu you may have to install something like ‘libpam-modules’
+# to get motd going. We had a convention of putting a specific
+# one-line status message into our MOTDs, and this parsed that out, so
+# is likely not too useful unless you adopt a similar convention.
+# Anyway, it’s a nice approach when using many systems.
+#
+# Note that there is also an apt-installable GUI tool called sysinfo,
+# but I think I devised this first so I’ll keep the name. ☻
+
+trim() {
+   local trimres=$(echo $1 |sed "s/^ \+//")
+}
+
+name=$(hostname)
+#glibc=$(rpm -q glibc|uniq)
+glibc=$(ls /lib/libc-*.so |head -1 |sed -e 's/.*-//' -e 's/\.so$//')
+gcc=$(gcc --version |head -1)
+kernel=$(uname -r)
+arch=$(uname -m)
+#distro=$(for f in /etc/{redhat,SuSE}-release; do test -f $f && head -1 $f; done)
+codename=$(lsb_release -c |awk '{print $2}')
+distro="$(head -1 /etc/issue.net) ($codename)"
+freemem=$(free -m |grep Mem |tr -s ' ' |cut -d' ' -f2)
+freeswap=$(free -m |grep Swap |tr -s ' ' |cut -d' ' -f2)
+trim $(cat /etc/motd |grep "^$(hostname)" |cut -d'-' -f3)
+msg=$trimres
+
+test $arch = "ia64" && {
+   vendor=$(grep '^vendor' /proc/cpuinfo |uniq |cut -d: -f2)
+   fam=$(grep '^family' /proc/cpuinfo |uniq |cut -d: -f2)
+   mhz=$(grep '^cpu MHz' /proc/cpuinfo |uniq |cut -d: -f2)
+   proc="$vendor$fam$mhz"
+   nprocs=$(grep '^processor' /proc/cpuinfo |wc -l |tr -s ' ')
+   cache=$(grep 'Size' /proc/pal/cpu0/cache_info |tail -1 |cut -d: -f2)
+} || {
+   proc=$(grep "model name" /proc/cpuinfo |uniq |cut -d: -f2 |tr -s ' ')
+   nprocs=$(grep processor /proc/cpuinfo |wc -l |tr -d ' ' |tr -s ' ')
+   cache=$( grep '\<cache\>'  /proc/cpuinfo |uniq |cut -d: -f2)
+}
+
+echo "Machine Name:   $name"
+echo "Linux Distro:   $distro"
+echo "GNU C Library:  $glibc"
+echo "GCC Version:    $gcc"
+echo "Kernel Release: $kernel"
+echo "Architecture:   $arch"
+echo "Processor(s):  $proc (x$nprocs)"
+echo "Cache:         $cache"
+echo "Physical RAM:   $freemem MB"
+echo "Swap:           $freeswap MB"
+test -n "$msg" && echo "Message:       $msg"
