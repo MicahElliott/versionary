@@ -1,6 +1,6 @@
 #! /bin/bash
 
-# sysinfo — Console util to show concise system info for any arch/distro.
+# sysinfo — Console util to show concise system info for Linux arch/distro.
 #
 # Author: Micah Elliott <mde MicahElliott com>
 # Date:   2005
@@ -26,6 +26,10 @@
 #
 # Note that there is also an apt-installable GUI tool called sysinfo,
 # but I think I devised this first so I’ll keep the name. ☻
+#
+# Much more could be done with this Python library if you want to take
+# the concepts here and apply to more OSes:
+# http://downloads.egenix.com/python/platform.py
 
 trim() {
    local trimres=$(echo $1 |sed "s/^ \+//")
