@@ -1,12 +1,14 @@
 #! /bin/bash
 
-# sysinfo — Console util to show concise system info for Linux arch/distro.
+# sysinfo — console util to show concise system info for Linux arch/distro
 #
 # Author:  Micah Elliott http://MicahElliott.com
 # License: WTFPL http://sam.zoy.org/wtfpl/
-# Date:    2005
+# Date:    2012
 #
-# This is really just a recipe for quickly showing the most pertinent
+# This should work on distros based on Arch, Debian, SuSE, and Redhat.
+#
+# This is a recipe for quickly showing the most pertinent
 # info for your systems. It was originally deployed in a compiler test
 # lab to be used on 50+ diverse machines.
 #
@@ -14,10 +16,6 @@
 # (gcc, glibc, etc), but you may want to tune it for whatever common
 # tools you work with (ruby/python/perl versions, etc). It’s also
 # handy for generating consistent bug reports.
-#
-# I wrote this back in 2005 to support RedHat and SuSE distros.  Now
-# (2010) I’ve added some Ubuntu support, but I no longer use the
-# others so not certain what’s borked there now.
 #
 # For Ubuntu you may have to install something like ‘libpam-modules’
 # to get motd going. We had a convention of putting a specific
@@ -43,8 +41,9 @@ gcc=$(gcc --version |head -1)
 kernel=$(uname -r)
 arch=$(uname -m)
 #distro=$(for f in /etc/{redhat,SuSE}-release; do test -f $f && head -1 $f; done)
+distro=$(lsb_release -i |awk '{print $3}')
+release=$(lsb_release -r |awk '{print $2}')
 codename=$(lsb_release -c |awk '{print $2}')
-distro="$(head -1 /etc/issue.net) ($codename)"
 freemem=$(free -m |grep Mem |tr -s ' ' |cut -d' ' -f2)
 freeswap=$(free -m |grep Swap |tr -s ' ' |cut -d' ' -f2)
 trim $(cat /etc/motd |grep "^$(hostname)" |cut -d'-' -f3)
@@ -60,17 +59,19 @@ test $arch = "ia64" && {
 } || {
    proc=$(grep "model name" /proc/cpuinfo |uniq |cut -d: -f2 |tr -s ' ')
    nprocs=$(grep processor /proc/cpuinfo |wc -l |tr -d ' ' |tr -s ' ')
-   cache=$( grep '\<cache\>'  /proc/cpuinfo |uniq |cut -d: -f2)
+   cache=$(awk '/^cache/ {print $4}' /proc/cpuinfo |head -1)
 }
 
-echo "Machine Name:   $name"
-echo "Linux Distro:   $distro"
-echo "GNU C Library:  $glibc"
-echo "GCC Version:    $gcc"
-echo "Kernel Release: $kernel"
-echo "Architecture:   $arch"
-echo "Processor(s):  $proc (x$nprocs)"
-echo "Cache:         $cache"
-echo "Physical RAM:   $freemem MB"
-echo "Swap:           $freeswap MB"
-test -n "$msg" && echo "Message:       $msg"
+echo "hostname:     $name"
+echo "distro:       $distro"
+echo "release:      $release"
+echo "codename:     $codename"
+echo "glibc:        $glibc"
+echo "gcc:          $gcc"
+echo "kernel:       $kernel"
+echo "architecture: $arch"
+echo "processors:  $proc (x$nprocs)"
+echo "cache:        $cache KB"
+echo "ram:          $freemem MB"
+echo "swap:         $freeswap MB"
+#test -n "$msg" && echo "Message:       $msg"
