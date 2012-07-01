@@ -23,14 +23,34 @@ key-values.
     distro:   archlinux
     release:  rolling
     codename: n/a
-    glibc:    2.15
-    gcc:      gcc (GCC) 4.7.1
     kernel:   3.4.4-2-ARCH
     arch:     x86_64
+    glibc:    2.15
     procs:    Pentium(R) Dual-Core CPU T4200 @ 2.00GHz (x2)
     cache:    1024 KB
     ram:      7924 MB
     swap:     517 MB
+    bash:     4.2.29(2)-release
+    zsh:      4.3.17
+    gcc:      4.7.1
+    java:     1.7.0_05-icedtea
+    python:   3.2.3
+    ruby:     1.9.3p194
+    perl:     v5.16.0
+    erlang:   5.9.1
+    php:      5.4.4
+    node:     v0.8.0
+    haskell:  none
+    mysql:    14.14
+    postgres: 9.1.4
+    sqlite:   3.7.13
+    mongodb:  2.0.6
+    couchdb:  1.2.0
+    redis:    2.4.15
+    apache:   2.2.22
+    nginx:    1.2.1
+    git:      1.7.11.1
+    hg:       2.2.2
 
 ## HISTORY
 Originally deployed in a compiler test lab to be used on 50+ diverse machines.

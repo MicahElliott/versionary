@@ -44,7 +44,7 @@ vnode=$(   w node &&   node --version                                   || echo 
 vghc=$(    w ghc &&    ghc --version                                    || echo "none" )
 verl=$(    w erl &&    erl -version    |& s 's/.* //'                   || echo "none" )
 vcoffee=$( w coffee && coffee -v       |& s 's/.* //'                   || echo "none" )
-vperl=$(   w perl &&   perl -v 2>&1    |sed -rn 's/.*\((.*)\).*/\1/;2p' || echo "none")
+vperl=$(   w perl &&   perl -v 2>&1 |sed -rn 's/.*(v[0-9.]+).*/\1/;2p'  || echo "none")
 vphp=$(    w php &&    php --version   |& head -1 |awk '{print $2}'     || echo "none" )
 # Too slow
 #vscala=$(  w scalac && scalac -version |& sed -r 's/.*([0-9]+\.[0-9]\.[0-9]).*/\1/'|| echo "none" )
