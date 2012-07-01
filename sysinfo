@@ -29,13 +29,19 @@ freeswap=$(free -m |grep Swap |tr -s ' ' |cut -d' ' -f2)
 trim $(cat /etc/motd |grep "^$(hostname)" |cut -d'-' -f3)
 msg=$trimres
 
+# Shells
+vbash=$( w bash && bash --version |& head -1 |awk '{print $4}' || echo "none" )
+vzsh=$(  w zsh &&  zsh --version  |& awk '{print $2}'          || echo "none" )
+
 # Compilers
-gcc=$(     w gcc &&    gcc --version   |& head -1 |awk '{print $3}'     || echo "none" )
+vgcc=$(    w gcc &&    gcc --version   |& head -1 |awk '{print $3}'     || echo "none" )
 vjava=$(   w java &&   java -version   |& sed -rn 's/.*"(.*)".*/\1/;1p' || echo "none" )
 vruby=$(   w ruby &&   ruby -v         |& awk '{print $2}'              || echo "none" )
 vpython=$( w python && python -V       |& awk '{print $2}'              || echo "none" )
 vnode=$(   w node &&   node --version                                   || echo "none" )
 vghc=$(    w ghc &&    ghc --version                                    || echo "none" )
+vperl=$(   w perl &&   perl -v 2>&1 |sed -rn 's/.*\((.*)\).*/\1/;2p'    || echo "none")
+vphp=$(    w php &&    php --version |& head -1 |awk '{print $2}'       || echo "none" )
 # Too slow
 #vscala=$(  w scalac && scalac -version |& sed -r 's/.*([0-9]+\.[0-9]\.[0-9]).*/\1/'|| echo "none" )
 
@@ -47,8 +53,6 @@ vsqlite=$( w sqlite3 && sqlite3 --version |& tail -1 |sed -r 's/ .*?//' || echo 
 # Services
 vapache=$( w apachectl && apachectl -version |& sed -rn 's/.*\/(.*) .*/\1/;1p' || echo "none" )
 vnginx=$(  w nginx &&     nginx -v |& sed -r 's/.*\///' || echo "none" )
-
-vperl=$( perl -v 2>&1 |sed -rn 's/.*\((.*)\).*/\1/;2p' )
 
 test $arch = "ia64" && {
    vendor=$(grep '^vendor' /proc/cpuinfo |uniq |cut -d: -f2)
@@ -74,11 +78,14 @@ echo "procs:   $proc (x$nprocs)"
 echo "cache:    $cache KB"
 echo "ram:      $freemem MB"
 echo "swap:     $freeswap MB"
-echo "gcc:      $gcc"
+echo "bash:     $vbash"
+echo "zsh:      $vzsh"
+echo "gcc:      $vgcc"
 echo "java:     $vjava"
 echo "python:   $vpython"
 echo "ruby:     $vruby"
 echo "perl:     $vperl"
+echo "php:      $vphp"
 echo "node:     $vnode"
 #echo "scala:    $vscala"
 echo "haskell:  $vghc"
