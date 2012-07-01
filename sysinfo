@@ -4,7 +4,6 @@
 #
 # Author:  Micah Elliott http://MicahElliott.com
 # License: WTFPL http://sam.zoy.org/wtfpl/
-# Date:    2012
 #
 # This should work on distros based on Arch, Debian, SuSE, and Redhat.
 #
@@ -62,16 +61,16 @@ test $arch = "ia64" && {
    cache=$(awk '/^cache/ {print $4}' /proc/cpuinfo |head -1)
 }
 
-echo "hostname:     $name"
-echo "distro:       $distro"
-echo "release:      $release"
-echo "codename:     $codename"
-echo "glibc:        $glibc"
-echo "gcc:          $gcc"
-echo "kernel:       $kernel"
-echo "architecture: $arch"
-echo "processors:  $proc (x$nprocs)"
-echo "cache:        $cache KB"
-echo "ram:          $freemem MB"
-echo "swap:         $freeswap MB"
+echo "hostname: $name"
+echo "distro:   $distro"
+echo "release:  $release"
+echo "codename: $codename"
+echo "glibc:    $glibc"
+echo "gcc:      $gcc"
+echo "kernel:   $kernel"
+echo "arch:     $arch"
+echo "procs:   $proc (x$nprocs)"
+echo "cache:    $cache KB"
+echo "ram:      $freemem MB"
+echo "swap:     $freeswap MB"
 #test -n "$msg" && echo "Message:       $msg"
