@@ -12,6 +12,7 @@
 #
 # * Option for JSON output
 
+s() { sed -r "$@" ; }
 trim() { local trimres=$(echo $1 |sed "s/^ \+//"); }
 w() { /usr/bin/which $1 >/dev/null 2>&1; }
 
@@ -39,20 +40,32 @@ vjava=$(   w java &&   java -version   |& sed -rn 's/.*"(.*)".*/\1/;1p' || echo 
 vruby=$(   w ruby &&   ruby -v         |& awk '{print $2}'              || echo "none" )
 vpython=$( w python && python -V       |& awk '{print $2}'              || echo "none" )
 vnode=$(   w node &&   node --version                                   || echo "none" )
+# What a monster!
 vghc=$(    w ghc &&    ghc --version                                    || echo "none" )
-vperl=$(   w perl &&   perl -v 2>&1 |sed -rn 's/.*\((.*)\).*/\1/;2p'    || echo "none")
-vphp=$(    w php &&    php --version |& head -1 |awk '{print $2}'       || echo "none" )
+verl=$(    w erl &&    erl -version    |& s 's/.* //'                   || echo "none" )
+vcoffee=$( w coffee && coffee -v       |& s 's/.* //'                   || echo "none" )
+vperl=$(   w perl &&   perl -v 2>&1    |sed -rn 's/.*\((.*)\).*/\1/;2p' || echo "none")
+vphp=$(    w php &&    php --version   |& head -1 |awk '{print $2}'     || echo "none" )
 # Too slow
 #vscala=$(  w scalac && scalac -version |& sed -r 's/.*([0-9]+\.[0-9]\.[0-9]).*/\1/'|| echo "none" )
+# Not including clojure since every project uses a different local version from .m2.
 
 # Databases
 vmysql=$(  w mysql &&   mysql --version   |& awk '{print $3}'           || echo "none" )
 vpsql=$(   w psql  &&   psql --version    |& sed -nr 's/.* //;1p'       || echo "none" )
 vsqlite=$( w sqlite3 && sqlite3 --version |& tail -1 |sed -r 's/ .*?//' || echo "none" )
 
+vmongodb=$( w mongo &&     mongo --version     |awk '{print $4}' || echo "none" )
+vcouchdb=$( w couchdb &&   couchdb -V |head -1 |sed -r 's/.* //' || echo "none" )
+vredis=$(   w redis-cli && redis-cli --version |awk '{print $2}' || echo "none" )
+
 # Services
 vapache=$( w apachectl && apachectl -version |& sed -rn 's/.*\/(.*) .*/\1/;1p' || echo "none" )
 vnginx=$(  w nginx &&     nginx -v |& sed -r 's/.*\///' || echo "none" )
+
+# Other tools
+vgit=$( w git && git --version |awk '{print $3}' || echo "none" )
+vhg=$(  w hg &&  hg --version  |head -1 |sed -r -e 's/\)//' -e 's/.* //' || echo "none" )
 
 test $arch = "ia64" && {
    vendor=$(grep '^vendor' /proc/cpuinfo |uniq |cut -d: -f2)
@@ -85,6 +98,7 @@ echo "java:     $vjava"
 echo "python:   $vpython"
 echo "ruby:     $vruby"
 echo "perl:     $vperl"
+echo "erlang:   $verl"
 echo "php:      $vphp"
 echo "node:     $vnode"
 #echo "scala:    $vscala"
@@ -92,6 +106,10 @@ echo "haskell:  $vghc"
 echo "mysql:    $vmysql"
 echo "postgres: $vpsql"
 echo "sqlite:   $vsqlite"
+echo "mongodb:  $vmongodb"
+echo "couchdb:  $vcouchdb"
+echo "redis:    $vredis"
 echo "apache:   $vapache"
 echo "nginx:    $vnginx"
-#test -n "$msg" && echo "Message:       $msg"
+echo "git:      $vgit"
+echo "hg:       $vhg"
