@@ -8,7 +8,7 @@ this is a clean and simple way to go.
 
 ## User flow
 
-    cd $TMPDIR
+    cd ~/abs
     # Get the one requisite file. Just download the PKGBUILD, or:
     wget https://raw.github.com/gist/719620/8f9af1f7683463a8977f7a758f80bd4be9acd587/PKGBUILD
     # Build the package

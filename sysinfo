@@ -3,15 +3,22 @@
 # sysinfo — console util to show concise system info for Linux arch/distro
 #
 # Author:  Micah Elliott http://MicahElliott.com
-# License: WTFPL http://sam.zoy.org/wtfpl/
+# License: GPL
+
+# To add:
+#
+# * An envar like SYSINFO_RUNTIMES=ruby,python,java to enable
+#   selectivelyshowing versions
+#
+# * Option for JSON output
 
 trim() { local trimres=$(echo $1 |sed "s/^ \+//"); }
+w() { /usr/bin/which $1 >/dev/null 2>&1; }
 
 name=$(hostname)
 #glibc=$(rpm -q glibc|uniq)
-glibc=$(ls /lib/libc-*.so |head -1 |sed -e 's/.*-//' -e 's/\.so$//')
-gcc=$(gcc --version |head -1)
 kernel=$(uname -r)
+glibc=$(ls /lib/libc-*.so |head -1 |sed -e 's/.*-//' -e 's/\.so$//')
 arch=$(uname -m)
 #distro=$(for f in /etc/{redhat,SuSE}-release; do test -f $f && head -1 $f; done)
 distro=$(lsb_release -i |awk '{print $3}')
@@ -21,6 +28,27 @@ freemem=$(free -m |grep Mem |tr -s ' ' |cut -d' ' -f2)
 freeswap=$(free -m |grep Swap |tr -s ' ' |cut -d' ' -f2)
 trim $(cat /etc/motd |grep "^$(hostname)" |cut -d'-' -f3)
 msg=$trimres
+
+# Compilers
+gcc=$(     w gcc &&    gcc --version   |& head -1 |awk '{print $3}'     || echo "none" )
+vjava=$(   w java &&   java -version   |& sed -rn 's/.*"(.*)".*/\1/;1p' || echo "none" )
+vruby=$(   w ruby &&   ruby -v         |& awk '{print $2}'              || echo "none" )
+vpython=$( w python && python -V       |& awk '{print $2}'              || echo "none" )
+vnode=$(   w node &&   node --version                                   || echo "none" )
+vghc=$(    w ghc &&    ghc --version                                    || echo "none" )
+# Too slow
+#vscala=$(  w scalac && scalac -version |& sed -r 's/.*([0-9]+\.[0-9]\.[0-9]).*/\1/'|| echo "none" )
+
+# Databases
+vmysql=$(  w mysql &&   mysql --version   |& awk '{print $3}'           || echo "none" )
+vpsql=$(   w psql  &&   psql --version    |& sed -nr 's/.* //;1p'       || echo "none" )
+vsqlite=$( w sqlite3 && sqlite3 --version |& tail -1 |sed -r 's/ .*?//' || echo "none" )
+
+# Services
+vapache=$( w apachectl && apachectl -version |& sed -rn 's/.*\/(.*) .*/\1/;1p' || echo "none" )
+vnginx=$(  w nginx &&     nginx -v |& sed -r 's/.*\///' || echo "none" )
+
+vperl=$( perl -v 2>&1 |sed -rn 's/.*\((.*)\).*/\1/;2p' )
 
 test $arch = "ia64" && {
    vendor=$(grep '^vendor' /proc/cpuinfo |uniq |cut -d: -f2)
@@ -39,12 +67,24 @@ echo "hostname: $name"
 echo "distro:   $distro"
 echo "release:  $release"
 echo "codename: $codename"
-echo "glibc:    $glibc"
-echo "gcc:      $gcc"
 echo "kernel:   $kernel"
 echo "arch:     $arch"
+echo "glibc:    $glibc"
 echo "procs:   $proc (x$nprocs)"
 echo "cache:    $cache KB"
 echo "ram:      $freemem MB"
 echo "swap:     $freeswap MB"
+echo "gcc:      $gcc"
+echo "java:     $vjava"
+echo "python:   $vpython"
+echo "ruby:     $vruby"
+echo "perl:     $vperl"
+echo "node:     $vnode"
+#echo "scala:    $vscala"
+echo "haskell:  $vghc"
+echo "mysql:    $vmysql"
+echo "postgres: $vpsql"
+echo "sqlite:   $vsqlite"
+echo "apache:   $vapache"
+echo "nginx:    $vnginx"
 #test -n "$msg" && echo "Message:       $msg"

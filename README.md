@@ -3,7 +3,9 @@ sysinfo -- console util to show concise system info for linux
 
 ## SYNOPSIS
 `sysinfo` displays system info for distros based on _Arch_, _Debian_, _SuSE_,
-and _Redhat_. It's similar to system(2), but gives more info.
+and _Redhat_. It's similar to system(2), but gives more info. Whereas top,
+free, uptime, etc give dynamic status indicators, `sysinfo` gives a static
+snapshot of system parameters.
 
 You may want to use this as a starter recipe for quickly showing the most
 pertinent info for your systems. The info shown is particularly useful for

@@ -6,8 +6,9 @@ pkgrel=1
 pkgdesc="show concise system info for linux on console"
 arch=('any')
 url="https://gist.github.com/719620"
-license=('WTFPL')
-depends=('lsb-release')
+license=('GPL')
+depends=('lsb-release' 'bash')
+provides=('sysinfo')
 makedepends=('git' 'ronn')
 md5sums=() #generate with 'makepkg -g'
 
