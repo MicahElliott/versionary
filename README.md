@@ -38,7 +38,7 @@ into our MOTDs, and this parsed that out, so is likely not too useful unless
 you adopt a similar convention. Anyway, it’s a nice approach when using many
 systems.
 
-Note that there is also an apt-installable GUI tool called sysinfo, but I
+Note that there is also an `apt`-installable GUI tool called _sysinfo_, but I
 think this existed first so I'll just keep with the name.
 
 Much more could be done with the

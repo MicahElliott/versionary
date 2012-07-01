@@ -1,7 +1,7 @@
 # Maintainer: Micah Elliott <mde@MicahElliott.com>
 
 pkgname=sysinfo-git
-pkgver=20120630
+pkgver=20120701
 pkgrel=1
 pkgdesc="show concise system info for linux on console"
 arch=('any')

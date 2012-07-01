@@ -5,7 +5,7 @@
 # Author:  Micah Elliott http://MicahElliott.com
 # License: WTFPL http://sam.zoy.org/wtfpl/
 
-trim() { local trimres=$(echo $1 |sed "s/^ \+//") }
+trim() { local trimres=$(echo $1 |sed "s/^ \+//"); }
 
 name=$(hostname)
 #glibc=$(rpm -q glibc|uniq)
