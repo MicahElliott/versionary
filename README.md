@@ -3,10 +3,13 @@ sysinfo -- console util to show concise system info for linux
 
 ## SYNOPSIS
 `sysinfo` displays system info for distros based on _Arch_, _Debian_, _SuSE_,
-and _Redhat_.
+and _Redhat_. It's similar to system(2), but gives more info.
 
-This also serves as a starter recipe for quickly showing the most pertinent
-info for your systems.
+You may want to use this as a starter recipe for quickly showing the most
+pertinent info for your systems. The info shown is particularly useful for
+working with compilers (gcc, glibc, etc), but you may want to tune it for
+whatever common tools you work with (ruby/python/perl versions, etc). It's
+also handy for generating consistent bug reports.
 
 ## SYNTAX
 Just run it! There are no options. You'll get some parsable output as
@@ -29,30 +32,26 @@ key-values.
 ## HISTORY
 Originally deployed in a compiler test lab to be used on 50+ diverse machines.
 
-The info shown is particularly useful for working with compilers
-(gcc, glibc, etc), but you may want to tune it for whatever common
-tools you work with (ruby/python/perl versions, etc). It's also
-handy for generating consistent bug reports.
+For Debian\* you may have to install something like `libpam-modules` to get
+motd going. We had a convention of putting a specific one-line status message
+into our MOTDs, and this parsed that out, so is likely not too useful unless
+you adopt a similar convention. Anyway, it’s a nice approach when using many
+systems.
 
-For Debian\* you may have to install something like `libpam-modules`
-to get motd going. We had a convention of putting a specific
-one-line status message into our MOTDs, and this parsed that out, so
-is likely not too useful unless you adopt a similar convention.
-Anyway, it’s a nice approach when using many systems.
-
-Note that there is also an apt-installable GUI tool called sysinfo,
-but I think this existed first so I'll just keep with the name.
+Note that there is also an apt-installable GUI tool called sysinfo, but I
+think this existed first so I'll just keep with the name.
 
 Much more could be done with the
 [Platform Python library](http://downloads.egenix.com/python/platform.py)
 if you want to take the concepts here and apply to more OSes.
 
 ## BUGS
-This has not been tested in years on anything but Arch and Debian. In fact,
-it's more of an example that I'm using to learn about Arch packaging.
+This has been tested recently only in Arch and Debian.
 
 ## AUTHOR
 [Micah Elliott](http://MicahElliott.com)
+
+Project hosted as [a gist](https://gist.github.com/719620 "sysinfo on github").
 
 ## COPYRIGHT
 [WTFPL](http://sam.zoy.org "WTF Public License")
