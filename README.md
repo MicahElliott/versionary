@@ -45,7 +45,7 @@ but I think this existed first so I'll just keep with the name.
 
 Much more could be done with the
 [Platform Python library](http://downloads.egenix.com/python/platform.py)
-if you want to take the concepts here and apply to more OSes:
+if you want to take the concepts here and apply to more OSes.
 
 ## BUGS
 This has not been tested in years on anything but Arch and Debian. In fact,
