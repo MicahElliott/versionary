@@ -6,7 +6,8 @@ sysinfo -- console util to show concise system info for linux
 and _Redhat_. It's similar to system(2), but gives more info. Whereas top,
 free, uptime, etc give dynamic status indicators, `sysinfo` gives a static
 snapshot of system parameters. It also shows version info for the most common
-interpreters and services.
+interpreters and services. Some munging of output is done to help commands
+aspire to [semantic versioning](http://http://semver.org/ "SemVer.org").
 
 You may want to use this as a starter recipe for quickly showing the most
 pertinent info for your systems. The info shown is particularly useful for

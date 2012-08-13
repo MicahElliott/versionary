@@ -39,7 +39,8 @@ vgcc=$(    w gcc &&    gcc --version   |& head -1 |awk '{print $3}'     || echo 
 vjava=$(   w java &&   java -version   |& sed -rn 's/.*"(.*)".*/\1/;1p' || echo "none" )
 vruby=$(   w ruby &&   ruby -v         |& awk '{print $2}'              || echo "none" )
 vpython=$( w python && python -V       |& awk '{print $2}'              || echo "none" )
-vnode=$(   w node &&   node --version                                   || echo "none" )
+vnode=$(   w node &&   node --version  |& s 's/^v//'                    || echo "none" )
+vlua=$(    w lua &&    lua -v 2>&1     |& awk '{print $2}'              || echo "none" )
 # What a monster!
 vghc=$(    w ghc &&    ghc --version                                    || echo "none" )
 verl=$(    w erl &&    erl -version    |& s 's/.* //'                   || echo "none" )
@@ -101,6 +102,7 @@ echo "perl:     $vperl"
 echo "erlang:   $verl"
 echo "php:      $vphp"
 echo "node:     $vnode"
+echo "lua:      $vlua"
 #echo "scala:    $vscala"
 echo "haskell:  $vghc"
 echo "mysql:    $vmysql"
