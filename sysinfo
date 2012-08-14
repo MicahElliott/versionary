@@ -16,10 +16,15 @@ s() { sed -r "$@" ; }
 trim() { local trimres=$(echo $1 |sed "s/^ \+//"); }
 w() { /usr/bin/which $1 >/dev/null 2>&1; }
 
+# http://stackoverflow.com/questions/2937407/test-whether-a-glob-has-any-matches-in-bash
+if stat -t /lib/libc-*.so >/dev/null 2>&1; then
+  glibc=$(echo /lib/libc-*.so |head -1 |sed -e 's/.*-//' -e 's/\.so$//')
+else
+  glibc="none"
+fi
+
 name=$(hostname)
-#glibc=$(rpm -q glibc|uniq)
 kernel=$(uname -r)
-glibc=$(ls /lib/libc-*.so |head -1 |sed -e 's/.*-//' -e 's/\.so$//')
 arch=$(uname -m)
 #distro=$(for f in /etc/{redhat,SuSE}-release; do test -f $f && head -1 $f; done)
 distro=$(lsb_release -i |awk '{print $3}')
