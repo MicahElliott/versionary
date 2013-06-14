@@ -69,6 +69,13 @@ Much more could be done with the
 [Platform Python library](http://downloads.egenix.com/python/platform.py)
 if you want to take the concepts here and apply to more OSes.
 
+## SIMILAR
+I don't know of any tool that derives all the system version info, but there are other neat status/info tools....
+
+There's a neat [ascii-art utility](https://github.com/KittyKatt/screenFetch/blob/master/screenfetch-dev) similar in nature.
+
+Also look for `archey` and `alsi`.
+
 ## BUGS
 This has been tested recently only in Arch and Debian.
 
