@@ -1,16 +1,27 @@
 #! /bin/bash
 
-# sysinfo — console util to show concise system info for Linux arch/distro
+# versionary — console util to show concise system info for Linux arch/distro
 #
 # Author:  Micah Elliott http://MicahElliott.com
-# License: GPL
+# License: WTFPL
 
 # To add:
 #
 # * An envar like SYSINFO_RUNTIMES=ruby,python,java to enable
 #   selectivelyshowing versions
 #
+# * Put everything into hash instead of mess of params
+#
 # * Option for JSON output
+#
+# * New tools: coffee, lsc, npm, chef, puppet, dart, vim, emacs, riak, neo4j
+#
+# * Might also be nice to indicate what key services are running (systemctl).
+#
+# * Could check envars to print things like EDITOR, SHELL, DE, TERM, LANG,
+#   USER, PAGER, CLASSPATH, GEMPATH, RUBYLIB, etc.
+#
+# * Could do client tools, like chrome, firefox, etc, but probably too many.
 
 s() { sed -r "$@" ; }
 trim() { local trimres=$(echo $1 |sed "s/^ \+//"); }
@@ -48,10 +59,13 @@ vnode=$(   w node &&   node --version  |& s 's/^v//'                    || echo 
 vlua=$(    w lua &&    lua -v 2>&1     |& awk '{print $2}'              || echo "none" )
 # What a monster!
 vghc=$(    w ghc &&    ghc --version                                    || echo "none" )
+# Other monsters include: ocaml, racket
 verl=$(    w erl &&    erl -version    |& s 's/.* //'                   || echo "none" )
 vcoffee=$( w coffee && coffee -v       |& s 's/.* //'                   || echo "none" )
 vperl=$(   w perl &&   perl -v 2>&1 |sed -rn 's/.*(v[0-9.]+).*/\1/;2p'  || echo "none")
 vphp=$(    w php &&    php --version   |& head -1 |awk '{print $2}'     || echo "none" )
+vclisp=$(  w clisp &&  clisp --version |head -1 |awk '{print $3}'       || echo "none" )
+vr=$(      w R &&      R --version     |head -1 |awk '{print $3}'       || echo "none" )
 # Too slow
 #vscala=$(  w scalac && scalac -version |& sed -r 's/.*([0-9]+\.[0-9]\.[0-9]).*/\1/'|| echo "none" )
 # Not including clojure since every project uses a different local version from .m2.
@@ -73,6 +87,9 @@ vnginx=$(  w nginx &&     nginx -v |& sed -r 's/.*\///' || echo "none" )
 vgit=$( w git && git --version |awk '{print $3}' || echo "none" )
 vhg=$(  w hg &&  hg --version  |head -1 |sed -r -e 's/\)//' -e 's/.* //' || echo "none" )
 
+vvim=$( w vim && vim --version |sed -rn 's/.*proved ([0-9.]+) .*/\1/;1p' || echo "none" )
+
+# Itanium is probably dead.
 test $arch = "ia64" && {
    vendor=$(grep '^vendor' /proc/cpuinfo |uniq |cut -d: -f2)
    fam=$(grep '^family' /proc/cpuinfo |uniq |cut -d: -f2)
@@ -109,7 +126,10 @@ echo "php:      $vphp"
 echo "node:     $vnode"
 echo "lua:      $vlua"
 #echo "scala:    $vscala"
+#echo "clojure:  $vclojure"
 echo "haskell:  $vghc"
+echo "clisp:    $vclisp"
+echo "r:        $vr"
 echo "mysql:    $vmysql"
 echo "postgres: $vpsql"
 echo "sqlite:   $vsqlite"
@@ -120,3 +140,18 @@ echo "apache:   $vapache"
 echo "nginx:    $vnginx"
 echo "git:      $vgit"
 echo "hg:       $vhg"
+echo "vim:      $vvim"
+
+# JSON/CSON:
+#
+# {
+#   info:
+#     hostname: "ario"
+#     distro: "arch"
+#     arch: "x86_64"
+#     ...
+#   versions:
+#     node: 0.8.16
+#     zsh: 5.0.2
+#     ...
+# }
