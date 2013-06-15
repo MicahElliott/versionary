@@ -1,5 +1,5 @@
-versionary -- console util to show concise system info for linux
-================================================================
+versionary -- console util to show concise system info on \*nix tools
+=====================================================================
 
 ## SYNOPSIS
 Sometimes it’s a pain to figure out what version of a tool is available on your system. Versionary removes the pain and gives a quick-glance view of most of the relevant tools on most \*NIX systems. It also makes it quick to see what’s missing from your system. Useful in a [MOTD](http://parkersamp.com/2010/10/howto-creating-a-dynamic-motd-in-linux/).
