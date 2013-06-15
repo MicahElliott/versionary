@@ -54,8 +54,38 @@ Just run it! There are no options. You’ll get some parsable output as key-valu
 And it’s individually useful to avoid trying to remember whether a command uses: `-v`, `-V`, `-version`, `--version`, `version`, `--help`, or something else.
 
     % alias ver=versionary
+
     % ver node  # this functionality NYI, but a nice idea :)
     0.8.16
+
+    % ver --cson  # NYI
+    {
+      info:
+        hostname: 'ario'
+        distro: 'arch'
+        arch: 'x86_64'
+        ...
+      versions:
+        node: '0.8.16'
+        zsh: '5.0.2'
+        ...
+      settings:
+        shell: '/usr/bin/zsh'
+        editor: 'vim'
+        de: 'i3'
+        term: 'rxvt-unicode-256color'
+        ...
+      managers:
+        nvm: true
+        chruby: true
+        rbenv: false
+        virtualenv: false
+        ...
+      running:
+        postgres: true
+        mysql: false
+        ...
+    }
 
 ## OMISSIONS
 Some tools are just too slow to get version info from in a generic fashion (without relying on pacman, apt-get, etc). And sometimes they’ll be installed manually (outside the packaging system), anyway. These (and several other) somewhat common packages are excluded from the listing for speed or other concerns: clojure, scala, coffee, lsc, npm, go, dart, riak, neo4j.

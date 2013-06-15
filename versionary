@@ -143,17 +143,3 @@ echo "nginx:    $vnginx"
 echo "git:      $vgit"
 echo "hg:       $vhg"
 echo "vim:      $vvim"
-
-# JSON/CSON:
-#
-# {
-#   info:
-#     hostname: "ario"
-#     distro: "arch"
-#     arch: "x86_64"
-#     ...
-#   versions:
-#     node: 0.8.16
-#     zsh: 5.0.2
-#     ...
-# }
