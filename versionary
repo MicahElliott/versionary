@@ -12,6 +12,8 @@
 #
 # * Put everything into hash instead of mess of params
 #
+# * Color: red for missing tools, purple for non-semver-compliant
+#
 # * Option for JSON output
 #
 # * New tools: coffee, lsc, npm, chef, puppet, dart, vim, emacs, riak, neo4j

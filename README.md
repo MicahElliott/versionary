@@ -1,5 +1,5 @@
-versionary -- console util to show concise system info on \*nix tools
-=====================================================================
+versionary — concise info on \*nix system tools
+===============================================
 
 ## SYNOPSIS
 Sometimes it’s a pain to figure out what version of a tool is available on your system. Versionary removes the pain and gives a quick-glance view of most of the relevant tools on most \*NIX systems. It also makes it quick to see what’s missing from your system. Useful in a [MOTD](http://parkersamp.com/2010/10/howto-creating-a-dynamic-motd-in-linux/).
@@ -51,14 +51,14 @@ Just run it! There are no options. You’ll get some parsable output as key-valu
     git:      1.7.11.1
     hg:       2.2.2
 
-And it’s individually useful to avoid trying to remember whether a command uses: -v, -V, -version, --version, version, or something else.
+And it’s individually useful to avoid trying to remember whether a command uses: `-v`, `-V`, `-version`, `--version`, `version`, `--help`, or something else.
 
     % alias ver=versionary
-    % ver node  # NYI
+    % ver node  # this functionality NYI, but a nice idea :)
     0.8.16
 
 ## OMISSIONS
-Some tools are just too slow to get version info from in a generic fashion (without relying on pacman, apt-get, etc). And sometimes they’ll be installed manually (outside the packaging system). These somewhat common packages are excluded from the listing for speed or other concerns: clojure, scala, coffee, lsc, npm, go, dart, riak.
+Some tools are just too slow to get version info from in a generic fashion (without relying on pacman, apt-get, etc). And sometimes they’ll be installed manually (outside the packaging system), anyway. These (and several other) somewhat common packages are excluded from the listing for speed or other concerns: clojure, scala, coffee, lsc, npm, go, dart, riak, neo4j.
 
 ## HISTORY
 Originally deployed in a compiler test lab to be used on 50+ diverse machines.
@@ -75,7 +75,9 @@ There’s a neat [ascii-art utility](https://github.com/KittyKatt/screenFetch/bl
 Also look for `archey` and `alsi`.
 
 ## BUGS
-This has been tested recently only in Arch and Debian.
+This has been tested recently only in Arch (and barely on Debian).
+
+The code is crap right now, but usable as-is. The forthcoming JSON and single-tool output features should be pretty useful, but require a rewrite. If a few people find the tool useful, I’ll do that.
 
 ## TODO
 See source for specific TODO items.
