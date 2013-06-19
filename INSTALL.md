@@ -1,12 +1,12 @@
-## Installing to Arch Linux
+# Installing to Arch Linux
 
-Installation (packaging) is a significant point of this tiny package. I wanted to use a tiny project to serve as an example of how to install directly from github (a gist!) to Arch Linux. Normally a package would go through an approval process to be put into AUR, but until your package is mature enough for that, this is a clean and simple way to go.
+Installation (packaging) is a significant point of this tiny package. I wanted to use a tiny project to serve as an example of how to install directly from Github (a gist!) to Arch Linux. Normally a package would go through an approval process to be put into AUR, but until your package is mature enough for that, this is a clean and simple way to go.
 
 ## User flow
 
     cd ~/abs
     # Get the one requisite file. Just download the PKGBUILD, or:
-    wget https://raw.github.com/gist/719620/8f9af1f7683463a8977f7a758f80bd4be9acd587/PKGBUILD
+    wget https://raw.github.com/MicahElliott/versionary/master/PKGBUILD
     # Build the package
     makepkg
     # Install

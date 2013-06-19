@@ -1,18 +1,17 @@
 # Maintainer: Micah Elliott <mde@MicahElliott.com>
 
 pkgname=versionary-git
-pkgver=20130615
+pkgver=20130619
 pkgrel=1
 pkgdesc="show concise system info for linux on console"
 arch=('any')
-url="https://gist.github.com/719620"
+url="https://github.com/MicahElliott/versionary"
 license=('GPL')
 depends=('lsb-release' 'bash')
 provides=('versionary' 'ver')
 makedepends=('git' 'ruby-ronn')
-md5sums=() #generate with 'makepkg -g'
+md5sums=()
 
-#_gitroot="https://gist.github.com/719620.git"
 _gitroot="git://github.com/MicahElliott/versionary"
 _gitname=versionary-git
 
@@ -35,7 +34,7 @@ build() {
   cd "$srcdir/$_gitname-build"
 
   # BUILD HERE
-  ronn README.md
+  ronn --manual 'Versionary Manual' --organization "Versionary v0.$pkgrel" README.md
   mv README versionary.1
   gzip versionary.1
 }
@@ -43,6 +42,7 @@ build() {
 package() {
   cd "$srcdir/$_gitname-build"
   install -Dm755 versionary $pkgdir/usr/bin/versionary
+  install -Dm755 ver $pkgdir/usr/bin/ver
   install -Dm644 versionary.1.gz $pkgdir/usr/share/man/man1/versionary.1.gz
 }
 
